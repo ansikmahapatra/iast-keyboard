@@ -6,7 +6,7 @@ This is a personal project of mine to implement an Indic keyboard layout which c
 
 ![keyboard-layout](indicKeyboard.PNG)
 
-| IAST  | Keyboard  | Devanāgari / Kal̥ingalipi Equivalent | Unicode |
+| IAST  | Keyboard  | Devanāgari / Kal̥ingalipi Equivalent | Unicode (Devanāgari) |
 |:---:|:---:|:---:|:---:|
 |ā |AltGr + a|  आ / ଆ   | U+0101      |
 |ī |AltGr + i|   ई / ଈ   |   U+012B    |
@@ -26,14 +26,23 @@ This is a personal project of mine to implement an Indic keyboard layout which c
 |ṭ |AltGr + t|   ट / ଟ   |   U+1E6D    |
 |ẏ |    | ଯ |   U+1E8F|
 
+Example:
+
+1. Example 1:
+   + Here's a sentence in Hindi:
+      + सभी मनुष्यों को गौरव और अधिकारों के मामले में जन्मजात स्वतंत्रता और समानता प्राप्त है । उन्हें बुद्धि और अंतरात्मा की देन प्राप्त है और परस्पर उन्हें भाईचारे के भाव से बर्ताव करना चाहिए । 
+   + Here's the transliteraion in IAST which the mentioned keyboard layout would support:
+     + Sabhī manuṣyōṁ kō gaurav aur adhikārōṁ kē māmalē mēṁ janmajāt svatantratā aur samānatā prāpt hai. Unhēṁ buddhi aur antarātmā kī dēn prāpt hai aur paraspar unhēṁ bhāīcārē ke bhāv sē bartāv karanā cāhiē.
+2. Example 2:
+   + Here's a sentence in Odia:
+     + ସାବୁ ମନୁଷ୍ୟ ଜନ୍ମକାଳରୁ ସ୍ବାଧୀନ, ସେମାନଙ୍କର ମର୍ଯଦା ଓ ଅଧିକାର ସମାନ, ସେମାନଙ୍କଠାରେ ପ୍ରଞା ଓ ବିବେକ ନିହିତ ଅଛି, ସେମାନେ ପରସ୍ପର ପ୍ରତି ଭ୍ରାତୃଭାବ ପୋଷଣ କରି କାର୍ଯ୍ଯ କରିବା ଦରକାର ।
+   + Here's the transliteraion in IAST which the mentioned keyboard layout would support:
+     + Sabu manuṣẏa janmaukāḷaru svadhīna, ṣemānaṅkara marẏadā o adhikāra samāna, semānaṅkaṭhāre prajñā o bibeka nihita achi, semāne paraspara prati bhrātrubhāba poṣaṇa kari kārẏya karibā darakāra.
+
 ## Modifiers
 
 1. On **macOS**: Alt or Options key
 2. On **Windows** / **Ubuntu based distros**: Right Alt or AltGr key
-
-For example:
-
-Alt + s = ś
 
 ## PostScript
 
