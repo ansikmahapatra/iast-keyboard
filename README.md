@@ -2,6 +2,10 @@
 
 This is a personal project of mine to implement an Indic keyboard layout which could be used in the Indian subcontinent (India, Bangladesh, Sri Lanka, Nepal, Bhutan, Pakistan, and Afghanistan) as the standard keyboard layout that would facilitate typing in Indic languages transliterated into the modified latin script following the IAST (International Alphabet for Sanskrit Transliteration) standard for the majority of the languages.
 
+## Demo Website
+
+You can try out the layout and compare the transliterations in this web app: [https://iast-demo.vercel.app](https://iast-demo.vercel.app)
+
 ## Layout
 
 ![keyboard-layout](indicKeyboard.PNG)
