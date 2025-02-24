@@ -1,6 +1,6 @@
 # iast-keyboard
 
-This is a personal project of mine to implement an Indic keyboard layout which could be used in the Indian subcontinent (India, Bangladesh, Sri Lanka, Nepal, Bhutan, Pakistan, and Afghanistan) as the standard keyboard layout that would facilitate typing in Indic languages transliterated into the modified latin script following the IAST (International Alphabet for Sanskrit Transliteration) standard for the majority of the languages.
+This is a personal project of mine to implement an Indic keyboard layout which could be used in the Indian subcontinent (India, Bangladesh, Sri Lanka, Nepal, Bhutan, Pakistan, and Afghanistan)  and beyond, for example, in countries where the Abugida scripts are used, as the standard keyboard layout that would facilitate typing in Indic languages transliterated into the modified latin script following the IAST (International Alphabet for Sanskrit Transliteration) standard for the majority of the languages.
 
 ## Demo Website
 
@@ -10,7 +10,7 @@ You can try out the layout and compare the transliterations in this web app: [ht
 
 ![keyboard-layout](indicKeyboard.PNG)
 
-| IAST  | Keyboard  | Devanāgari / Kal̥ingalipi Equivalent | Unicode (Devanāgari) |
+| IAST  | Keyboard  | Devanāgari / Odia script Equivalent | Unicode (Devanāgari) |
 |:---:|:---:|:---:|:---:|
 |ā |AltGr + a|  आ / ଆ   | U+0101      |
 |ī |AltGr + i|   ई / ଈ   |   U+012B    |

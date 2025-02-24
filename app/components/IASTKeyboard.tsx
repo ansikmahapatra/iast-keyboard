@@ -2,6 +2,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import sanscript from '@indic-transliteration/sanscript';
 import localFont from 'next/font/local';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { FaBackspace, FaShareAlt, FaInfo } from 'react-icons/fa';
 
 const myFont = localFont({
   src: [{ path: '../fonts/NavBharati.ttf' }],
@@ -13,7 +17,8 @@ interface IASTKeyboardProps { }
 const IASTKeyboard: React.FC<IASTKeyboardProps> = () => {
   const [inputText, setInputText] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
-
+  const router = useRouter();
+  const queryString = useSearchParams();
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -28,6 +33,13 @@ const IASTKeyboard: React.FC<IASTKeyboardProps> = () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+
+  useEffect(() => {
+    if (queryString.has('iast')) {
+      const decodedIAST = decodeURIComponent(queryString.get('iast') as string);
+      setInputText(decodedIAST);
+    }
+  }, [queryString.get('iast')]);
 
 
   const iastRows = [
@@ -60,39 +72,63 @@ const IASTKeyboard: React.FC<IASTKeyboardProps> = () => {
     }
   };
 
+  const handleShare = () => {
+    const encodedIAST = encodeURIComponent(inputText);
+    router.push(`/?iast=${encodedIAST}`);
+    handleCopy();
+  };
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(window.location.href);
+    toast.success('URL copied to clipboard!');
+  };
+
+  const handleToast = (toastMessage: string | null) => {
+    if (!toastMessage) return;
+    toast.info(toastMessage);
+  }
+
+  const handleBharati = () => {
+    toast.info(
+      <span className={`${myFont.className}`}>
+        bhārati / {sanscript.t("bhārati", "iast", "devanagari")}
+      </span>
+    );
+  }
+
   const scripts = [
-    { name: 'Devanagari', script: "devanagari" },
-    { name: 'Odia', script: "oriya" },
-    { name: 'Brahmi', script: "brahmi" },
-    { name: 'Ol Chiki', script: "ol_chiki" },
-    { name: 'Grantha', script: "grantha" },
-    { name: 'Tamil', script: "tamil" },
-    { name: 'Malayalam', script: "malayalam" },
-    { name: 'Telugu', script: "telugu" },
-    { name: 'Kannada', script: "kannada" },
-    { name: 'Sinhala', script: "sinhala" },
-    { name: 'Bengali', script: "bengali" },
-    { name: 'Gurmukhi', script: "gurmukhi" },
-    { name: 'Modi', script: "modi" },
-    { name: 'Gujarati', script: "gujarati" },
-    { name: 'Sharada', script: "sharada" },
-    { name: 'Siddham', script: "siddham" },
-    { name: 'Burmese', script: "burmese" },
-    { name: 'Tibetan', script: "tibetan" },
-    { name: 'Thai', script: "thai" },
-    { name: 'Khmer', script: "khmer" },
-    { name: 'Balinese', script: "balinese" },
-    { name: 'Javanese', script: "javanese" },
-    { name: 'Ahom', script: "ahom" },
-    { name: 'Manipuri', script: "manipuri" },
-    { name: 'Cyrillic', script: "cyrillic" },
-    { name: 'Kharoshti', script: "kharoshthi" },
-    { name: 'Multani', script: "multani" },
-    // { name: 'Dogra', script: "dogra" },
-    // { name: 'Lao', script: "lao" },
-    { name: 'Urdu', script: "urdu" },
-    { name: 'Rohingya', script: "rohingya" },
-    { name: 'Avestan', script: "avestan" },
+    { name: 'Devanagari', script: "devanagari", iast: "devanāgarī", native: "देवनागरी" },
+    { name: 'Odia', script: "oriya", iast: "or̤iā", native: "ଓଡ଼ିଆ" },
+    { name: 'Brahmi', script: "brahmi", iast: "brāhmī", native: "𑀩𑁆𑀭𑀸𑀳𑁆𑀫𑀻" },
+    { name: 'Ol Chiki', script: "ol_chiki", iast: "ol ciki", native: "ᱳᱞᱚ ᱪᱚᱤᱠᱚᱤ" },
+    { name: 'Grantha', script: "grantha", iast: "grantha", native: "𑌗𑍍𑌰𑌨𑍍𑌥" },
+    { name: 'Tamil', script: "tamil", iast: "tamiḻ", native: "தமிழ்" },
+    { name: 'Malayalam', script: "malayalam", iast: "malayāl̤aṃ", native: "മലയാളം" },
+    { name: 'Telugu', script: "telugu", iast: "telugu", native: "తెలుగు" },
+    { name: 'Kannada', script: "kannada", iast: "kannaḍa", native: "ಕನ್ನಡ" },
+    { name: 'Sinhala', script: "sinhala", iast: "siṃhala", native: "සිංහල" },
+    { name: 'Bengali', script: "bengali", iast: "bāṃlā", native: "বাংলা" },
+    { name: 'Gurmukhi', script: "gurmukhi", iast: "gurmukhī", native: "ਗੁਰਮੁਖੀ" },
+    { name: 'Modi', script: "modi", iast: "moḍī", native: "𑘦𑘻𑘚𑘲" },
+    { name: 'Gujarati', script: "gujarati", iast: "gujarātī", native: "ગુજરાતી" },
+    { name: 'Sharada', script: "sharada", iast: "śāradā", native: "𑆯𑆳𑆫𑆢𑆳" },
+    { name: 'Siddham', script: "siddham", iast: "siddhaṃ", native: "𑖭𑖰𑖟𑖿𑖠𑖽" },
+    { name: 'Tibetan', script: "tibetan", iast: "bod yig", native: "བོད་ཡིག" },
+    { name: 'Manipuri', script: "manipuri", iast: "maṇipurī", native: "ꯃꯅꯤꯄꯨꯔꯤ" },
+    { name: 'Multani', script: "multani", iast: null, native: null },
+    { name: 'Ahom', script: "ahom", iast: null, native: null },
+    { name: 'Burmese', script: "burmese", iast: null, native: null },
+    { name: 'Thai', script: "thai", iast: null, native: null },
+    { name: 'Khmer', script: "khmer", iast: null, native: null },
+    { name: 'Balinese', script: "balinese", iast: null, native: null },
+    { name: 'Javanese', script: "javanese", iast: null, native: null },
+    { name: 'Cyrillic', script: "cyrillic", iast: null, native: null },
+    { name: 'Urdu', script: "urdu", iast: "urdū", native: "اُرَْدَُو" },
+    { name: 'Kharoshti', script: "kharoshthi", iast: "kharoṣṭhī", native: "𐨑𐨪𐨆𐨮𐨿𐨛𐨁𐨌" },
+    // { name: 'Dogra', script: "dogra", iast: null, native: null },
+    // { name: 'Lao', script: "lao", iast: null, native: null },
+    { name: 'Rohingya', script: "rohingya", iast: null, native: null },
+    { name: 'Avestan', script: "avestan", iast: null, native: null },
   ];
 
   return (
@@ -103,12 +139,9 @@ const IASTKeyboard: React.FC<IASTKeyboardProps> = () => {
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
           ref={inputRef}
-          style={{ width: '100%', marginBottom: '10px', color: 'black' }}
+          style={{ width: '100%', marginBottom: '10px', color: 'black', textAlign: 'center', height: '50px', border: '2px solid gray', borderRadius: '50px' }}
+          placeholder="Enter IAST text here..."
         />
-        <div style={{ display: "flex", gap: "40%", marginBottom: "10px" }}>
-          <button onClick={handleSpace}>Space</button>
-          <button onClick={handleBackspace}>Backspace</button>
-        </div>
 
         <div style={{ marginTop: '10px', display: 'inline-grid' }}>
           {iastRows.map((row, rowIndex) => (
@@ -119,14 +152,7 @@ const IASTKeyboard: React.FC<IASTKeyboardProps> = () => {
               {row.map((char) => (
                 <div
                   key={char}
-                  style={{
-                    border: '1px solid #ccc',
-                    padding: '10px',
-                    textAlign: 'center',
-                    cursor: 'pointer',
-                    userSelect: 'none',
-                    minWidth: '40px'
-                  }}
+                  className='keyboard keys'
                   onClick={() => handleCharClick(char)}
                   title={char}
                 >
@@ -135,6 +161,35 @@ const IASTKeyboard: React.FC<IASTKeyboardProps> = () => {
               ))}
             </div>
           ))}
+          <div
+            key="7"
+            style={{ display: 'flex', justifyContent: 'left', gap: '5px', marginBottom: '5px' }}
+          >
+            <div
+              key="Space"
+              className='keyboard longkeys'
+              onClick={() => handleSpace()}
+              title="Space"
+            >
+              Space
+            </div>
+            <div
+              key="Backspace"
+              className='keyboard share'
+              onClick={() => handleBackspace()}
+              title="Backspace"
+            >
+              <FaBackspace />
+            </div>
+            <div
+              key="Share"
+              className='keyboard share'
+              onClick={() => handleShare()}
+              title="Backspace"
+            >
+              <FaShareAlt />
+            </div>
+          </div>
         </div>
       </div>
 
@@ -159,7 +214,7 @@ const IASTKeyboard: React.FC<IASTKeyboardProps> = () => {
           <tbody>
             <tr key="bharati">
               <td style={{ border: '1px solid #ccc', padding: '8px', textAlign: 'left' }}>
-                Bharati
+                Bharati <FaInfo className='info' onClick={() => handleBharati()} />
               </td>
               <td style={{ border: '1px solid #ccc', padding: '8px', textAlign: 'left' }} className={`${myFont.className}`}>
                 {sanscript.t(inputText, "iast", "devanagari")}
@@ -169,6 +224,7 @@ const IASTKeyboard: React.FC<IASTKeyboardProps> = () => {
               <tr key={scriptInfo.name}>
                 <td style={{ border: '1px solid #ccc', padding: '8px', textAlign: 'left' }}>
                   {scriptInfo.name}
+                  {scriptInfo.native && <FaInfo className='info' onClick={() => handleToast(scriptInfo.iast + " / " + scriptInfo.native)} />}
                 </td>
                 <td style={{ border: '1px solid #ccc', padding: '8px', textAlign: 'left' }}>
                   {sanscript.t(inputText, "iast", scriptInfo.script)}
@@ -194,6 +250,8 @@ const IASTKeyboard: React.FC<IASTKeyboardProps> = () => {
           </li>
         </ol>
       </section>
+
+      <ToastContainer />
     </div>
   );
 };

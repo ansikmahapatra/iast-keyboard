@@ -19,3 +19,46 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.keyboard {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: 'center';
+  cursor: 'pointer';
+  user-select: 'none';
+}
+
+.info {
+  display: inline-flex;
+  float: inline-end;
+}
+
+.keys {
+  min-width: 40px;
+}
+
+.longkeys {
+  min-width: 265px;
+}
+
+.share {
+  min-width: 85px;
+}
+
+.keyboard:hover {
+  background-color: orange;
+}
+
+.keyboard:active {
+  background-color: green;
+  color: white;
+}
+
+.socials {
+  display: inline-flex;
+  font-size: 30px;
+}
+
+.social {
+  margin: 10px;
+}
